@@ -171,4 +171,24 @@ main ul {
 main li {
   list-style-type: circle; }
 
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column; }
+
+main {
+  flex: 1;
+  margin-bottom: 3rem; }
+
+footer {
+  background-color: #F2F2F2;
+  font-size: 75%;
+  padding: 1rem 0; }
+
+footer .content {
+  max-width: 42rem;
+  margin: auto;
+  padding-left: 1rem;
+  padding-right: 1rem; }
+
 /*# sourceMappingURL=basic.css.map */

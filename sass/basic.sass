@@ -20,52 +20,24 @@ a
   text-decoration: none
 
 @import topnav
+@import document
+
+body
+  display: flex
+  min-height: 100vh
+  flex-direction: column
 
 main
+  flex: 1
+  margin-bottom: 3rem
+
+footer
+  background-color: #F2F2F2
+  font-size: 75%
+  padding: 1rem 0
+
+footer .content
   max-width: 42rem
   margin: auto
   padding-left: 1rem
   padding-right: 1rem
-
-h1
-  font-weight: 200
-  font-size: 3rem
-  text-align: center
-  margin-top: 2rem
-  margin-bottom: 2rem
-
-h2
-  font-weight: 200
-  font-size: 2rem
-  margin-top: 2rem
-  margin-bottom: 1rem
-
-h3
-  font-weight: 200
-  font-size: 1.5rem
-  margin-top: 1rem
-  margin-bottom: 0.5rem
-
-p
-  line-height: 1.6em
-  margin-bottom: 1em
-  &:last-child
-    margin-bottom: 0
-
-blockquote
-  margin: 1em
-  border-left: 0.25em #d8d8d8 solid
-  background-color: #fafafa
-  padding: 1em 1em
-
-code
-  color: #808080
-  font-family: Menlo, monospace
-  font-size: .85em
-
-main ul
-  margin: 1em 0
-  padding-left: 2.5em
-
-main li
-  list-style-type: circle
