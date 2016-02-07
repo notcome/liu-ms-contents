@@ -194,6 +194,7 @@ The last one is similar to the third one and therefore omitted.
 > Let $\varphi$ and $\psi$ be formulas such that $\varphi \logicequiv \psi$. Let $\chi'$ be obtained from the formula $\chi$ by replacing all sub formulas of the form $\varphi$ by $\psi$.
 
 
+
 > 1. Define the map $'$ be induction on formulas.
 > 2. Show that for all $\chi$, $\chi \logicequiv \chi'$.
 
@@ -300,4 +301,224 @@ The second part. (i) and (ii) follows directly from induction hypothesis. If $(\
 - there exists $a \in B$ such that $(\mathfrak{A}, \beta\frac{a}{x}) \models \varphi$
 - there exists $a \in B$ such that $(\mathfrak{B}, \beta\frac{a}{x}) \models \varphi$
 - $(\mathfrak{B}, \beta) \models \varphi$
+
+## Some Simple Formalizations
+
+### Exercises
+
+#### 6.7
+
+> Every positive real number has a positive square root.
+
+$$
+\forall x (0 < x \to \exists y (0 < y \land y \cdot y = x)
+$$
+
+> If $\rho$ is strictly monotone then $\rho$ is injective
+
+$$
+(\forall x \forall y(x < y \to fx < fy) \lor \forall x \forall y(x < y \to fx > fy) \to \forall x\forall y(\lnot x \equiv y \to \lnot fx \equiv fy)
+$$
+
+> $\rho$ is uniformly continuous on $\mathbb{R}$.
+
+$$
+\forall u (0 < u \to \exists v (0 < v \land \forall x \forall y (dxy < v \to dfxfy < u)))
+$$
+
+> For all $x$, if $\rho$ is differentiable at $x$ the $\rho$ is continuous at $x$.
+
+This is complex and since neither division nor subtraction is allowed, I choose to split it up.
+
+First, formalize $d(\frac{f(x+h)-f(x)}{h}, c) < u$:
+
+$$
+\varphi_1 = \exists a\exists b(a + fx \equiv 0 \land b \cdot h \equiv 1 \land d(b \cdot (f(x+h) + a))c < u)
+$$
+
+Next, put $\varphi_1$ inside the definition of limit:
+
+$$
+\varphi_2 = \forall u(0 < u \to \exists v (0 < v \land \forall h(\lnot h \equiv 0 \land dh0 < v \to \varphi_1))
+$$
+
+Then, a “local” version of local continuity:
+
+$$
+\varphi_3 = \forall u(0 < u \to \exists v (0 < v \land \forall y(dxy < v \to dfxfy < u)))
+$$
+
+Put it together:
+
+$$
+\forall x(\exists c \varphi_2 \to \varphi_3)
+$$
+
+#### 6.8
+
+> $R$ is a equivalence relation with at least two equivalence classes.
+
+In addition to formulas in 6.1, $S_{eq}$ should also satisfy:
+
+$$
+\exists x \exists y \lnot Rxy
+$$
+
+> $R$ is an equivalence relation with an equivalence class containing more than one element.
+
+In addition to formulas in 6.1, $S_{eq}$ should also satisfy:
+
+$$
+\exists x\exists y(\lnot x \equiv y \land Rxy)
+$$
+
+#### 6.9
+
+1. Group axioms are Horn sentences.
+   
+2. For the theory of orderings, one need disjunction to express $x<y\lor x\equiv y \lor y<x$, yet this is not permitted in Horn calculus.
+   
+   For the theory of fields, there is a formula $\lnot x \equiv 0 \to \exists y x\cdot y\equiv 1$. Both negation and consequence are not permitted. This can also be rewritten as disjunction: $x \equiv 0 \lor \exists y x\cdot y \equiv 1$, yet this is not permitted either.
+
+#### 6.10
+
+> Every finite subset of $\{1,2,3,\dots\}$ is a spectrum.
+
+Disjunction of cardinality statements.
+
+> For every $m \geq 1$, the set of numbers $> 0$ which are divisible by $m$ is a spectrum.
+
+Each equivalence class contains exactly $m$ elements.
+
+> The set of squares $> 0$ is a spectrum.
+
+
+
+> The set of squares $> 0$ is a spectrum.
+
+Define a subset—distinguished using a predicate $D$—and define a bijective function $f : D \times D \to A$.
+
+$f$ is surjective:
+
+$$
+\forall v \exists x \exists v (Dx \land Dy \land fxy \equiv v)
+$$
+
+$f$ is injective:
+
+$$
+\forall x_1 \forall y_1 \forall x_2 \forall y_2(Dx_1 \land Dy_1 \land Dx_2 \land Dy_2 \to \varphi)
+$$
+
+where $\varphi = fx_1y_1 \equiv fx_2y_2 \to x_1\equiv x_2 \land y_1 \equiv y_2$.
+
+> The set of nonprime numbers $> 0$ is a spectrum.
+
+The simplest way to do is to create two subsets and define a bijective function from the product of these two subsets to the universe. My original intention is to treat the universe as a matrix of elements and define two equivalence relations $A$ and $B$. Each column of elements should belong to the same equivalence class of $A$, and each row of $B$.
+
+Each relation have at least two equivalence classes, and elements of the same equivalence class in one relation must be distinct from each other in the other relation:
+
+$$
+\exists x \exists y \lnot Axy \land \exists x \exists y \lnot Bxy
+$$
+
+To make the universe a matrix, first one needs to ensure each element holds exactly one element:
+
+$$
+\forall x \forall y (Axy \land Bxy \to x \equiv y)
+$$
+
+Then, make each equivalence class of the same relation the same cardinality:
+
+$$
+\forall x \forall y (\lnot Axy \land \lnot Bxy \to \exists v_1\exists v_2 (Axv_1\land Byv_1 \land Bxv_2 \land Ayv_2))
+$$
+
+**Proof**. Assume there exists two equivalence classes of $A$ that have different numbers of elements. Denote the smaller class $X$ and the other $Y$. There exists $y \in Y$ such that for all $x \in X$, $Bxy$ does not hold. Therefore, we have a contradiction between our assumption and the last formula above. The case for $B$ is similar.
+
+> The set of prime numbers is a spectrum.
+
+Make $\mathfrak{A} \cong (\{1, 2, \dots, k\}, +^\mathbb{N}, \cdot^\mathbb{N})$, where $k$ is the size of $A$. Use $1$ and $k$ to be constants denoting the smallest and the largest element, respectively. First, $1$ is not $k$, so there are at least two elements.
+
+$$
+\lnot 1 \equiv k
+$$
+
+Every element except $1$ is a successor of another:
+
+$$
+\forall x (\lnot x \equiv 1 \to \exists y (\sigma y \equiv x))
+$$
+
+In addition to $\Phi_{ord}$, we also require each number is smaller than its successor:
+
+$$
+\forall x x < \sigma x
+$$
+
+Technically, $+$ and $\cdot$ are partial functions. Therefore, they are defined as a relation. The plus relation:
+
+$$
+\begin{align*}
+&\forall x\forall y\forall z(Pxyz \to Pyxz) \\
+&\forall x Px1\sigma x\\
+&\forall x \forall y \forall z (Pxyz \to P \sigma x y \sigma z)
+\end{align*}
+$$
+
+The multiplication relation:
+
+$$
+\begin{align*}
+&\forall x\forall y\forall z(Mxyz \to Myxz)\\
+&\forall x Mx1x\\
+&\forall x\forall y \forall z(Mxyz \to \exists v (Pzyv \land M\sigma xyv))
+\end{align*}
+$$
+
+In fact, $\sigma$ is also partial, but it can be rewritten to a relation in a mechanical yet verbose way. Therefore, I don’t handle this issue.
+
+At last, we claim $k$ is a prime number:
+
+$$
+\forall x \forall y (\lnot x \equiv 1 \land \lnot y \equiv 1 \to \lnot Mxyk )
+$$
+
+## Some Remarks on Formalizability
+
+### Exercise
+
+#### 7.5
+
+From the first three sentences, $(A, \sigma^A, 0^A)$ satisfies (P1), (P2), and (P3) respectively.
+
+**Claim.** Every structure $\mathfrak{A} = (A, +^A, \cdot^A, 0^A, 1^A)$ that satisfies $\Pi$ is isomorphic to $\mathfrak{R} = (\mathbb{N}, +, \cdot, 0, 1)$.
+
+**Proof.** Apply Dedekind’s theorem, there exists an isomorphism $\pi: A \to \mathbb{N}$   and $\pi(0^A) = 0^\mathbb{N}$. Use induction one can show that any nonzero element in $A$ has a predecessor.
+
+Next, show $0^A +^A 1^A \equiv 1^A$.
+
+Assume this is false, then there exists a nonzero element $x$ such that $x + 1 \equiv 1$. Since $0 + 1 \equiv 0 + x + 1$, $0 \equiv 0 + x$. Denote $x$’s predecessor as $y$, then $0 \equiv 0 + (y + 1) \equiv = (0 + y) + 1$. Yet $0$ does not have any predecessor, we get a contradiction. Consequently $\pi(1^A) = \pi(0^A +^A 1^A) = 0^\mathbb{N} +^\mathbb{N} + 1^\mathbb{N} = 1^\mathbb{N}$.
+
+Next, show $\pi(a+^A+b) = \pi(a) +^\mathbb{N} + \pi(b)$.
+
+If $b \equiv 0^A$, $\pi(a +^A + 0^A) = \pi(a) = \pi(a) +^\mathbb{N} 0^\mathbb{N} = \pi(a) +^\mathbb{N} + \pi(0^\mathbb{N})$.
+
+Otherwise, use $x$ denote $b$’s predecessor:
+
+$$
+\begin{align*}
+\pi(a+^A+b)
+&= \pi(a +^A (x +^A +1^A))\\
+&= \pi((a +^A x) +^A 1^A)\\
+&= \pi(a +^A x) +^\mathbb{N} 1^\mathbb{N}\\
+&= \pi(a) +^\mathbb{N} \pi(x) +^\mathbb{N} 1^\mathbb{N}\\
+&= \pi(a) +^\mathbb{N} \pi(x +^A 1^A)\\
+&= \pi(a) +^\mathbb{N} \pi(b)\\
+\end{align*}
+$$
+
+Note that I applied the induction hypothesis twice.
+
+I am not interested to show the multiplication, but I believe the method should be similar.
 
