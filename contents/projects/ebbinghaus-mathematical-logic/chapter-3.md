@@ -522,3 +522,115 @@ Note that I applied the induction hypothesis twice.
 
 I am not interested to show the multiplication, but I believe the method should be similar.
 
+## Substitution
+
+### Exercises
+
+#### 8.8
+
+$$
+\begin{align*}
+&\exists x_1 \dots \exists x_n (\varphi_{dis} \land \varphi_x \land \varphi_{inc})\\
+&\varphi_{dis} = \lnot x_1 \equiv x_2 \land \dots \land \lnot x_1 \equiv x_n \land \dots \land \lnot x_{n-1} \equiv x_n \\
+&\varphi_x = \varphi\frac{x_1}{x} \land \dots \land \varphi\frac{x_n}{x} \\
+&\varphi_{inc} = \forall y (\varphi\frac{y}{x} \to y \equiv x_1 \lor \dots \lor y \equiv x_n)
+\end{align*}
+$$
+
+#### 8.9
+
+$$
+\begin{align*}
+[\exists x \exists y (Pxu \land Pyv)]\frac{uuu}{xyv}
+&= \exists x \exists y [(Pxu \land Pyv) \frac{u}{v}] \\
+&= \exists x \exists y (Pxu \land Pyv \frac{u}{v}) \\
+&= \exists x \exists y (Pxu \land Pyu)
+\end{align*}
+$$
+
+$$
+\begin{align*}
+[\exists x \exists y (Pxu \land Pyv)]\frac{v}{u}\frac{fuv}{v}
+&= \exists x \exists y [(Pxu \land Pyv)\frac{v}{u}\frac{fuv}{v}]\\
+&= \exists x \exists y (Pxu\frac{v}{u}\frac{fuv}{v} \land Pyv\frac{v}{u}\frac{fuv}{v}\\
+&= \exists x \exists y (Pxv \land Pyfuv)
+\end{align*}
+$$
+
+$$
+\begin{align*}
+[\exists x\exists y(Pxu \land Pyv)]\frac{ux}{xu}\frac{fuv}{v}
+&= \exists w \exists y [(Pxu \land Pyv)\frac{x}{u}\frac{fuv}{v}\frac{w}{x}] \\
+&= \exists w \exists y (Pwx \land Pyfuv)
+\end{align*}
+$$
+
+$$
+\begin{align*}
+&[\forall x \exists y (Pxy \land Pxu) \lor \exists u fuu \equiv x]\frac{x}{x}\frac{fxy}{u}\\
+=&\{[\forall x \exists y (Pxy \land Pxu)] \frac{x}{x}\frac{fxy}{u}\} \lor [ \exists u(fuu \equiv x)\frac{x}{x}\frac{fxy}{u}]\\
+=&\forall v \exists w (Pxy \land Pxu \frac{fxy}{u}\frac{vw}{xy}) \lor \exists u(fuu \equiv x\frac{x}{x})\\
+=&\forall v \exists w (Pvw \land Pvfxy) \lor \exists u(fuu \equiv x)\\
+\end{align*}
+$$
+
+#### 8.10
+
+$\varphi\frac{t_0\dots t_r}{x_0\dots x_r} \models \forall x_0 \dots \forall x_r (x_0 \equiv t_0 \land \dots \land x_r \equiv t_r \to \varphi)$.
+
+Let $\mathfrak{I} \models \varphi\frac{t_0\dots t_r}{x_0\dots x_r}$. By substitution lemma, $\mathfrak{I}\frac{\mathfrak{I}(t_0)\dots\mathfrak{I}(t_r)}{x_0\dots x_r} \models \varphi$. Pick an arbitrary set of $x_0, \dots, x_r$, denote as $v_0, \dots, v_r$. If $\mathfrak{I}\frac{v_0\dots v_r}{x_0\dots x_r}$ does not satisfy $x_0 \equiv t_0 \dots x_r \equiv t_r$, $\mathfrak{I}\frac{v_0\dots v_r}{x_0\dots x_r} \models x_0 \equiv t_0 \land \dots \land x_r \equiv t_r \to \varphi$ holds trivially. Otherwise, by coincidence lemma, $\mathfrak{I}\frac{v_0 \dots v_r}{x_0 \dots x_r} \models \varphi$. Consequently, $\mathfrak{I} \models \forall x_0 \dots \forall x_r (x_0 \equiv t_0 \land \dots \land x_r \equiv t_r \to \varphi)$.
+
+$\forall x_0 \dots \forall x_r (x_0 \equiv t_0 \land \dots \land x_r \equiv t_r \to \varphi) \models \varphi\frac{t_0\dots t_r}{x_0\dots x_r}$.
+
+Let $\mathfrak{I} \models \forall x_0 \dots \forall x_r (x_0 \equiv t_0 \land \dots \land x_r \equiv t_r \to \varphi)$. Clearly, when $\mathfrak{I}\frac{v_0\dots v_r}{x_0\dots x_r} \models x_0 \equiv t_0 \land \dots \land x_r \equiv t_r$, $\mathfrak{I}\frac{v_0\dots v_r}{x_0\dots x_r} \models \varphi$. By coincidence lemma, $\mathfrak{I}\frac{\mathfrak{I}(t_0)\dots\mathfrak{I}(t_r)}{x_0\dots x_r} \models \varphi$ also holds. Then, applying the substitution lemma, we have $\mathfrak{I} \models \varphi\frac{t_0\dots t_r}{x_0\dots x_r}$.
+
+#### 8.11
+
+$$
+\begin{array}{}
+t_1' & x_0 \dots x_r & t_0 \dots t_r & s_1' \\
+\vdots & \vdots & \vdots & \vdots \\
+t_n' & x_0 \dots x_r & t_0 \dots t_r & s_n' \\
+\hline
+Rt_1'\dots t_n' & x_0 \dots x_r & t_0 \dots t_r & Rs_1'\dots s_n'
+\end{array}
+$$
+
+$\equiv$  is a special type of relation.
+
+$$
+\begin{array}{}
+\varphi & x_0 \dots x_r & t_0 \dots t_r & \psi \\
+\hline
+\lnot \varphi & x_0 \dots x_r & t_0 \dots t_r & \lnot \psi
+\end{array}
+$$
+
+$$
+\begin{array}{}
+\varphi_1 & x_0 \dots x_r & t_0 \dots t_r & \psi_1 \\
+\varphi_2 & x_0 \dots x_r & t_0 \dots t_r & \psi_2 \\
+\hline
+\varphi_1 \lor \varphi_2 & x_0 \dots x_r & t_0 \dots t_r & \psi_1 \lor \psi_2
+\end{array}
+$$
+
+$$
+\begin{array}{}
+\varphi & x_{i_1} \dots x_{i_s} & t_{i_1} \dots t_{i_s} & \psi \\
+\hline
+\exists x \varphi & x_0 \dots x_r & t_0 \dots t_r & \exists x \psi
+\end{array}
+$$
+
+if $x \ne x_{i_0}, \dots, x \ne x_{i_s}$, $0 \leq i_1 \leq \dots \leq i_s \leq r$, $x \notin \mathrm{var}(t_{i_1}), \dots, x \notin \mathrm{var}(t_{i_s})$, and $\{x_0, \dots, x_r\} \setminus \{x_{i_1}, \dots, x_{i_s}\} \cap \mathrm{free}(\varphi) = \emptyset$.
+
+$$
+\begin{array}{}
+\varphi & x_{i_1} \dots x_{i_s} x & t_{i_1} \dots t_{i_s} w & \psi \\
+\hline
+\exists x \varphi & x_0 \dots x_r & t_0 \dots t_r & \exists w \psi
+\end{array}
+$$
+
+if $x \ne x_{i_0}, \dots, x \ne x_{i_s}$, $0 \leq i_1 \leq \dots \leq i_s \leq r$, $w \notin \mathrm{var}(t_{i_1}), \dots, w \notin \mathrm{var}(t_{i_s}), w \notin \mathrm{var}(\varphi)$, and $\{x_0, \dots, x_r\} \setminus \{x_{i_1}, \dots, x_{i_s}\} \cap \mathrm{free}(\varphi) = \emptyset$.
